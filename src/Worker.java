@@ -1,6 +1,7 @@
 public class Worker {
     private String email;
     private String workerID;
+    private String role;
 
     public Worker(String email, String workerID) {
         this.email = email;

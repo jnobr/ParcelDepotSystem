@@ -1,7 +1,5 @@
-public class Manager extends Worker {
+public class Manager {
 
 
-    public Manager(String email, String workerID) {
-        super(email, workerID);
-    }
+
 }
