@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class CustomerMap {
 
-    private HashMap<String,Customer> map = new HashMap<>();
+    private final HashMap<String,Customer> map = new HashMap<>();
 
 
     public HashMap<String, Customer> getMap() {
@@ -16,19 +16,30 @@ public class CustomerMap {
         }
     }
 
-    public Customer findCustomer() {
-
-        return map.get("123");
+    public Customer findCustomer(String id) {
+        Customer Customer = map.get(id);
+        if (Customer == null) {
+            return null;
+        }
+        return map.get(id);
     }
 
     public boolean addCustomer(Customer Customer) {
 
+        if(this.map.containsKey(Customer.getCustomerID())) {
+            return false;
 
-        return false;
+        }
+            this.map.put(Customer.getCustomerID(),Customer);
+            return true;
 
     }
 
     public boolean removeCustomer(Customer Customer) {
+        if(this.map.containsKey(Customer.getCustomerID())) {
+            this.map.remove(Customer.getCustomerID());
+            return true;
+        }
         return false;
     }
 }

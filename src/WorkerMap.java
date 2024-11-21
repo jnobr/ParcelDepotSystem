@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class WorkerMap {
 
 
-    private HashMap<String,Worker> map = new HashMap<>();
+    private final HashMap<String,Worker> map = new HashMap<>();
 
 
     public HashMap<String, Worker> getMap() {
@@ -17,19 +17,30 @@ public class WorkerMap {
         }
     }
 
-    public Worker findWorker() {
-
-        return map.get("123");
+    public Worker findWorker(String id) {
+        Worker Worker = map.get(id);
+        if (Worker == null) {
+            return null;
+        }
+        return map.get(id);
     }
 
     public boolean addWorker(Worker Worker) {
 
-
-        return false;
+        if(map.containsKey(Worker.getWorkerID())) {
+            return false;
+        }
+        map.put(Worker.getWorkerID(),Worker);
+        return true;
 
     }
 
     public boolean removeWorker(Worker Worker) {
+
+        if(map.containsKey(Worker.getWorkerID())) {
+            map.remove(Worker.getWorkerID());
+            return true;
+        }
         return false;
     }
 }

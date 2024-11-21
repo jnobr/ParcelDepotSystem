@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class ParcelMap  {
 
-    private HashMap<String,Parcel> map = new HashMap<>();
+    private final HashMap<String,Parcel> map = new HashMap<>();
 
 
     public HashMap<String, Parcel> getMap() {
@@ -16,19 +16,28 @@ public class ParcelMap  {
         }
     }
 
-    public Parcel findParcel() {
-
-        return map.get("123");
+    public Parcel findParcel(String id) {
+        Parcel Parcel = map.get(id);
+        if (Parcel == null) {
+            return null;
+        }
+        return map.get(id);
     }
 
     public boolean addParcel(Parcel parcel) {
-
-
-        return false;
+        if(this.map.containsKey(parcel.getParcelID())) {
+            return false;
+        }
+        this.map.put(parcel.getParcelID(),parcel);
+        return true;
 
     }
 
     public boolean removeParcel(Parcel parcel) {
+        if(this.map.containsKey(parcel.getParcelID())) {
+            this.map.remove(parcel.getParcelID());
+            return true;
+        }
         return false;
     }
 }
