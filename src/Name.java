@@ -27,7 +27,7 @@ public class Name {
         this.lastname = lastname;
     }
 
-    public String toString() {
+    public String getName() {
         return firstname + " " + middlename + " " + lastname + "\n";
     }
 }

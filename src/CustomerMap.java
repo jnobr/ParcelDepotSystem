@@ -35,9 +35,9 @@ public class CustomerMap {
 
     }
 
-    public boolean removeCustomer(Customer Customer) {
-        if(this.map.containsKey(Customer.getCustomerID())) {
-            this.map.remove(Customer.getCustomerID());
+    public boolean removeCustomer(String id) {
+        if(this.map.containsKey(id)) {
+            this.map.remove(id);
             return true;
         }
         return false;

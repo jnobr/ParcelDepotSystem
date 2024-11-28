@@ -31,11 +31,9 @@ public class Customer extends Name {
     }
 
     public String toString() {
-        String firstname = getFirstname();
-        String middlename= getMiddlename();
-        String surname = getLastname();
+        String name = this.getName();
 
-        return firstname + " " + middlename + " " + surname + " " + this.email + " " + this.phone
+        return name + " " + this.email + " " + this.phone
                 + " " + this.customerID;
     }
 }
