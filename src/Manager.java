@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 
 public class Manager {
     private ParcelMap AllParcels;
@@ -8,8 +9,7 @@ public class Manager {
     private BufferedReader fileReader;
     private BufferedWriter fileWriter;
 
-    public Manager(){
-    }
+    public Manager(){}
 
 
     public boolean validateCustomer(Customer customer) {
@@ -99,11 +99,60 @@ public class Manager {
 
     }
 
-    public void calculateCost() {
+    public double calculateCost(Parcel parcel) {
+        //Rules for calculating cost
+        // weight * days * (dimensions added together)
+        //Discounts:
+        //10% off for any ideas in the range of 500-999
+        //20% off for parcel ids starting with "C","J","K" or "M"
+        //5% off for any parcels stored for 1 day
+        int dimensionsTotal;
+        double cost;
+        String[] individualDimensions = parcel.getDimensions().split("x");
+        dimensionsTotal = Integer.parseInt(individualDimensions[0])
+                + Integer.parseInt(individualDimensions[1])
+                + Integer.parseInt(individualDimensions[2]);
+        cost = dimensionsTotal * parcel.getStorageTime() * parcel.getWeight();
+        double discount = checkForDiscount(parcel);
+        if(discount != 0) {
+            cost = cost * discount;
+        }
+
+        return cost;
+
 
     }
 
-    public void collectOrder() {
+    public double checkForDiscount(Parcel parcel) {
+        boolean condition1,condition2,condition3;
+        double discount = 0;
+        String substring = parcel.getParcelID().substring(1);
+        int idNum = Integer.parseInt(substring);
+        String idChar = parcel.getParcelID().substring(0, 1);
+        condition1 = parcel.getStorageTime() == 1;
+        condition2 = idNum >= 500 && idNum <= 999;
+        condition3 = idChar.equals("C") || idChar.equals("J")
+                || idChar.equals("K") || idChar.equals("M");
+
+        if(condition1) {discount= discount + 0.05;}
+        if(condition2) {discount= discount + 0.10;}
+        if(condition3) {discount= discount + 0.20;}
+
+        return discount;
+
+    }
+
+    public boolean collectOrder(Customer currentCustomer,Parcel currentParcel) {
+        boolean validCustomer = validateCustomer(currentCustomer);
+        boolean validParcel = validateParcel(currentParcel);
+        if(validCustomer || validParcel) {
+            log.append("Order could not be collected as either the customer or parcel are invalid\n");
+            return false;
+        }
+
+        double price = checkForDiscount(currentParcel);
+
+        return false;
     }
 
     public void cancelOrder() {
@@ -138,6 +187,26 @@ public class Manager {
             line = fileReader.readLine();
 
         }
+
+    }
+
+    public void readParcelsFromFile() throws IOException {
+        fileReader = new BufferedReader(new FileReader("src/data/Parcels.csv"));
+        String line = fileReader.readLine();
+        Parcel temp;
+        //id days weight dimensions
+        while(line != null) {
+            String[] parts = line.split(",");
+            String parcelID = parts[0];
+            int days = Integer.parseInt(parts[1]);
+            int weight = Integer.parseInt(parts[2]);
+            String dimensions = parts[3] + "x" + parts[4] + "x" + parts[5];
+            temp = new Parcel(parcelID,days,dimensions,weight);
+            this.updateParcelRecord(temp);
+            line = fileReader.readLine();
+
+        }
+
 
     }
 

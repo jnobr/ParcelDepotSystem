@@ -40,6 +40,7 @@ public class Tester {
         SystemManager.validateWorker(null);
 
         SystemManager.readCustomersFromFile();
+        SystemManager.readParcelsFromFile();
 
 
         System.out.println(SystemManager.returnLog());
