@@ -39,6 +39,6 @@ public class Parcel {
 
     @Override
     public String toString() {
-            return parcelID + " " + StorageTime + " " + dimensions + " " + Weight + "\n";
+            return "\nParcel ID" + parcelID + "\nStorage length: " + StorageTime + "\nParcel dimensions: " + dimensions + "\nWeight:  " + Weight;
     }
 }

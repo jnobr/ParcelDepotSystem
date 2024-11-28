@@ -35,10 +35,10 @@ public class WorkerMap {
 
     }
 
-    public boolean removeWorker(Worker Worker) {
+    public boolean removeWorker(String id) {
 
-        if(map.containsKey(Worker.getWorkerID())) {
-            map.remove(Worker.getWorkerID());
+        if(map.containsKey(id)) {
+            map.remove(id);
             return true;
         }
         return false;

@@ -28,6 +28,6 @@ public class Name {
     }
 
     public String getName() {
-        return firstname + " " + middlename + " " + lastname + "\n";
+        return firstname + " " + middlename + " " + lastname;
     }
 }

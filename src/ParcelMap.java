@@ -33,9 +33,9 @@ public class ParcelMap  {
 
     }
 
-    public boolean removeParcel(Parcel parcel) {
-        if(this.map.containsKey(parcel.getParcelID())) {
-            this.map.remove(parcel.getParcelID());
+    public boolean removeParcel(String id) {
+        if(this.map.containsKey(id)) {
+            this.map.remove(id);
             return true;
         }
         return false;

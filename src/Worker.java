@@ -1,10 +1,11 @@
-public class Worker {
-    private String email;
+public class Worker extends Name {
+
     private String workerID;
     private String role;
 
-    public Worker(String email, String workerID) {
-        this.email = email;
+    public Worker(String firstname, String middlename, String surname, String workerID,String role) {
+        super(firstname,middlename,surname);
+        this.role = role;
         this.workerID = workerID;
     }
 
@@ -12,15 +13,19 @@ public class Worker {
         this.workerID = workerID;
 
     }
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getWorkerID() {
         return workerID;
     }
-    public String getEmail() {
-        return email;
+    public void setRole(String role) {
+        this.role = role;
+    }
+    public String getRole() {
+        return role;
+    }
+
+    public String toString() {
+        return "\nName: " + this.getName() + "\nWorker ID: " + workerID + "\nRole: " + role;
     }
 
 
