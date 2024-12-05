@@ -1,10 +1,13 @@
+package controller;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import model.Worker;
 
 public class WorkerMap {
 
 
-    private final HashMap<String,Worker> map = new HashMap<>();
+    private final HashMap<String, Worker> map = new HashMap<>();
 
 
     public HashMap<String, Worker> getMap() {

@@ -1,9 +1,12 @@
+package controller;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import model.Parcel;
 
 public class ParcelMap  {
 
-    private final HashMap<String,Parcel> map = new HashMap<>();
+    private final HashMap<String, Parcel> map = new HashMap<>();
 
 
     public HashMap<String, Parcel> getMap() {

@@ -1,3 +1,5 @@
+package model;
+
 public class Worker extends Name {
 
     private String workerID;
@@ -22,6 +24,18 @@ public class Worker extends Name {
     }
     public String getRole() {
         return role;
+    }
+
+    public void addCustomerToQueue(Customer customer) {
+
+    }
+
+    public void removeCustomerFromQueue(Customer customer) {
+
+    }
+
+    public void checkQueue() {
+
     }
 
     public String toString() {

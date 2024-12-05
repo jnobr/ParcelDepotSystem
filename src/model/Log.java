@@ -1,3 +1,5 @@
+package model;
+
 public class Log {
 
     private final StringBuffer log = new StringBuffer();

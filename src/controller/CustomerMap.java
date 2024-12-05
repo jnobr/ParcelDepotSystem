@@ -1,9 +1,12 @@
+package controller;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import model.Customer;
 
 public class CustomerMap {
 
-    private final HashMap<String,Customer> map = new HashMap<>();
+    private final HashMap<String, Customer> map = new HashMap<>();
 
 
     public HashMap<String, Customer> getMap() {

@@ -1,3 +1,8 @@
+package view;
+
+import controller.*;
+import model.*;
+
 import java.io.IOException;
 
 public class Tester {
@@ -17,9 +22,9 @@ public class Tester {
         System.out.println(parcel.toString());
         System.out.println(worker.toString());
 
-
-
         SystemManager.initialize();
+
+
 
         SystemManager.validateCustomer(customer);
         SystemManager.validateParcel(parcel);
@@ -39,11 +44,15 @@ public class Tester {
         SystemManager.validateParcel(null);
         SystemManager.validateWorker(null);
 
-        SystemManager.readCustomersFromFile();
-        SystemManager.readParcelsFromFile();
+        SystemManager.readCustomersFromFile("Custs.csv");
+        SystemManager.readParcelsFromFile("Parcels.csv");
+        //System.out.println(SystemManager.returnAllCustomers().getMap());
+        SystemManager.initialize_Queue();
 
 
-        System.out.println(SystemManager.returnLog());
+        System.out.println(SystemManager.checkQueue());
+        //System.out.println(SystemManager.returnLog());
+
 
 
 

@@ -1,3 +1,5 @@
+package model;
+
 public class Parcel {
     private String parcelID;
     private int StorageTime;
@@ -39,6 +41,6 @@ public class Parcel {
 
     @Override
     public String toString() {
-            return "\nParcel ID" + parcelID + "\nStorage length: " + StorageTime + "\nParcel dimensions: " + dimensions + "\nWeight:  " + Weight;
+            return "\nParcel ID: " + parcelID + "\nStorage length: " + StorageTime + "\nParcel dimensions: " + dimensions + "\nWeight:  " + Weight;
     }
 }

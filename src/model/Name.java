@@ -1,3 +1,5 @@
+package model;
+
 public class Name {
     private String firstname;
     private String middlename;

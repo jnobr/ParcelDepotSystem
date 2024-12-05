@@ -1,3 +1,5 @@
+package model;
+
 public class Customer extends Name {
 
     private String customerID;
