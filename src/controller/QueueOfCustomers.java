@@ -6,7 +6,7 @@ import model.Customer;
 
 public class QueueOfCustomers {
 
-    private HashMap<Integer,String> customerQueue = new HashMap<Integer,String>();
+    private HashMap<Integer,String> customerQueue = new HashMap<>();
     private int currentNumber = 1;
     public QueueOfCustomers() {}
     public HashMap<Integer,String> getCustomerQueue() {
@@ -17,9 +17,9 @@ public class QueueOfCustomers {
         this.customerQueue.put(num,id);
     }
 
-    public void removeCustomer(Integer num) {
-        this.customerQueue.remove(num);
-        currentNumber += 1;
+    public void removeCustomer() {
+        this.customerQueue.remove(this.currentNumber);
+        this.currentNumber++;
 
     }
 

@@ -15,6 +15,7 @@ public class WorkerMap {
     }
 
     public void initialiseMap(ArrayList<Worker> Workers) {
+        //TODO: Create 3 dummy employees and add them to the list here
         for(Worker Worker : Workers) {
             this.map.put(Worker.getWorkerID(),Worker);
         }

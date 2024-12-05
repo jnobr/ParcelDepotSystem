@@ -13,11 +13,6 @@ public class CustomerMap {
         return map;
     }
 
-    public void initialiseMap(ArrayList<Customer> Customers) {
-        for(Customer Customer : Customers) {
-            this.map.put(Customer.getCustomerID(),Customer);
-        }
-    }
 
     public Customer findCustomer(String id) {
         Customer Customer = map.get(id);

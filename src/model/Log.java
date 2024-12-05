@@ -5,7 +5,9 @@ public class Log {
     private final StringBuffer log = new StringBuffer();
     private final StringBuilder builder = new StringBuilder();
 
-
+    public Log() {
+        initialiseBuffer();
+    }
     public String getLog() {
         return log.toString();
     }

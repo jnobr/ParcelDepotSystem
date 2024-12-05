@@ -13,11 +13,7 @@ public class ParcelMap  {
         return map;
     }
 
-    public void initialiseMap(ArrayList<Parcel> parcels) {
-        for(Parcel parcel : parcels) {
-            this.map.put(parcel.getParcelID(),parcel);
-        }
-    }
+
 
     public Parcel findParcel(String id) {
         Parcel Parcel = map.get(id);

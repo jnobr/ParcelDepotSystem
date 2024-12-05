@@ -14,7 +14,10 @@ public class Manager {
     private BufferedReader fileReader;
     private BufferedWriter fileWriter;
 
-    public Manager(){}
+    public Manager(){
+        initialize();
+        initialize_Queue();
+    }
 
 
     public boolean validateCustomer(Customer customer) {
@@ -101,12 +104,12 @@ public class Manager {
         AllCustomers = new CustomerMap();
         AllParcels = new ParcelMap();
         AllWorkers = new WorkerMap();
+        Queue = new QueueOfCustomers();
     }
 
     public void initialize_Queue()
     {
         Integer count = 1;
-        Queue = new QueueOfCustomers();
         for(String id: AllCustomers.getMap().keySet())
         {
             Queue.addCustomer(id,count);
@@ -119,6 +122,7 @@ public class Manager {
     {
         return Queue.getCustomerQueue();
     }
+
     public double calculateFee(Parcel parcel, Worker worker) {
         //Rules for calculating cost
         // weight * days * (dimensions added together)
@@ -172,24 +176,34 @@ public class Manager {
         boolean validCustomer = validateCustomer(currentCustomer);
         boolean validParcel = validateParcel(currentParcel);
         boolean validWorker = validateWorker(currentWorker);
-        if(validCustomer || validParcel) {
+        if(validCustomer && validParcel) {
             log.append("Order could not be collected as either the customer or parcel are invalid\n");
             return false;
         }
+        boolean firstInQueue = Queue.checkIfFirstInQueue(currentCustomer);
         if(!validWorker) {
             log.append("Worker " + currentWorker.getWorkerID()
                     + " does not have authorisation to give customer their order\n");
             return false;
         }
+        if(!firstInQueue){
+            log.append("Customer " + currentCustomer.getCustomerID() + "is not first in the queue\n");
+            return false;
 
-        double price = checkForDiscount(currentParcel,currentWorker);
+        }
+
+        double price = calculateFee(currentParcel,currentWorker);
         AllParcels.removeParcel(currentParcel.getParcelID());
-        //todo: remove customer from queue, check it is customer's turn
+        Queue.removeCustomer();
+        log.append("Parcel " + currentParcel.getParcelID() + "has been collected and cost of "
+                + price + " has been paid. Transaction completed by worker "
+                + currentWorker.getWorkerID() + "\n");
 
         return true;
     }
 
     public void cancelOrder() {
+        //TODO: remove customer from queue and remove parcel from parcel list
     }
 
     public String returnLog() {
@@ -246,6 +260,7 @@ public class Manager {
     }
 
     public void writeToFile() {
+        //Create file and write system info
 
     }
 }

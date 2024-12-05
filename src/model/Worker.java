@@ -26,17 +26,6 @@ public class Worker extends Name {
         return role;
     }
 
-    public void addCustomerToQueue(Customer customer) {
-
-    }
-
-    public void removeCustomerFromQueue(Customer customer) {
-
-    }
-
-    public void checkQueue() {
-
-    }
 
     public String toString() {
         return "\nName: " + this.getName() + "\nWorker ID: " + workerID + "\nRole: " + role;
