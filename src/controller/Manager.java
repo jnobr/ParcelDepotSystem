@@ -19,9 +19,35 @@ public class Manager {
 
     public Manager(){
         initialize();
-        initialize_Queue();
+        //initialize_Queue();
     }
 
+    public Customer getCustomer(String id){
+        //returns an empty customer if no corresponding customer can be found for error handling purposes
+        Customer customer = AllCustomers.findCustomer(id);
+        if(customer == null){
+            return new Customer("","","","");
+        }
+        return customer;
+    }
+
+    public Worker getWorker(String id){
+        //returns an empty worker if no corresponding worker can be found for error handling purposes
+        Worker worker = AllWorkers.findWorker(id);
+        if(worker == null){
+            return new Worker("","","","","");
+        }
+        return worker;
+    }
+
+    public Parcel getParcel(String id){
+        //returns an empty parcel if no corresponding parcel can be found for error handling purposes
+        Parcel parcel = AllParcels.findParcel(id);
+        if(parcel == null){
+            return new Parcel("",0,"",0);
+        }
+        return parcel;
+    }
 
     public boolean validateCustomer(Customer customer) {
         if (customer != null) {
@@ -166,6 +192,7 @@ public class Manager {
         Queue = new QueueOfCustomers();
         initialize_Queue();
         initialise_Workers();
+        log.append("System fully initialised\n");
     }
 
     public void initialize_Queue()
@@ -173,6 +200,7 @@ public class Manager {
         Integer count = 1;
         for(String id: AllCustomers.getMap().keySet())
         {
+            System.out.println(id);
             Queue.addCustomer(id,count);
             count++;
         }
@@ -250,7 +278,7 @@ public class Manager {
         boolean validCustomer = validateCustomer(currentCustomer);
         boolean validParcel = validateParcel(currentParcel);
         boolean validWorker = validateWorker(currentWorker);
-        if(validCustomer && validParcel) {
+        if(!validCustomer || !validParcel) {
             log.append("Order could not be collected as either the customer or parcel are invalid\n");
             return false;
         }
@@ -261,7 +289,9 @@ public class Manager {
             return false;
         }
         if(!firstInQueue){
-            log.append("Customer " + currentCustomer.getCustomerID() + "is not first in the queue\n");
+            log.append("Customer " + currentCustomer.getCustomerID() + " is not first in the queue\n");
+            System.out.println("The current queue is " + Queue.getCustomerQueue()
+                    + "First in queue is " + Queue.getFirstInQueue() + "\n");
             return false;
 
         }
@@ -340,6 +370,7 @@ public class Manager {
 
             fileWriter.write(log.getLog());
             fileWriter.close();
+            System.out.println("Log written to log.txt\n");
 
         } catch (IOException e) {
             e.printStackTrace();

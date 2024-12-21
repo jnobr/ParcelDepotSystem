@@ -18,6 +18,8 @@ public class Tester {
                 new Worker("M","","Q","LKJ","Manager");
 
 
+
+
         System.out.println(customer.toString());
         System.out.println(parcel.toString());
         System.out.println(worker.toString());
@@ -49,10 +51,14 @@ public class Tester {
         //System.out.println(SystemManager.returnAllCustomers().getMap());
         SystemManager.initialize_Queue();
 
-
+        Customer real_customer = SystemManager.getCustomer("X009");
+        Worker real_worker = SystemManager.getWorker("003");
+        Parcel real_parcel = SystemManager.getParcel("X009");
         System.out.println(SystemManager.checkQueue());
         //System.out.println(SystemManager.returnLog());
         //System.out.println(SystemManager.returnAllWorkers("ROLE"));
+
+        SystemManager.collectOrder(real_customer,real_parcel,real_worker);
 
         SystemManager.writeToFile();
 

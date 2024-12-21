@@ -6,11 +6,11 @@ import model.Customer;
 
 public class QueueOfCustomers {
 
-    private HashMap<Integer,String> customerQueue = new HashMap<>();
+    private final HashMap<Integer,String> customerQueue = new HashMap<>();
     private int currentNumber = 1;
     public QueueOfCustomers() {}
     public HashMap<Integer,String> getCustomerQueue() {
-        return customerQueue;
+        return this.customerQueue;
     }
 
     public void addCustomer(String id, Integer num) {
@@ -21,6 +21,10 @@ public class QueueOfCustomers {
         this.customerQueue.remove(this.currentNumber);
         this.currentNumber++;
 
+    }
+
+    public String getFirstInQueue() {
+        return this.customerQueue.get(this.currentNumber);
     }
 
     public boolean checkIfFirstInQueue(Customer customer) {

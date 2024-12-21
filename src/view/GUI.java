@@ -2,6 +2,8 @@ package view;
 
 import controller.*;
 import model.Customer;
+import model.Parcel;
+import model.Worker;
 
 import java.awt.BorderLayout;
 import java.awt.event.*;
@@ -15,9 +17,9 @@ public class GUI {
     private final Manager SystemManager = new Manager();
 
     public GUI() throws IOException {
-        SystemManager.initialize();
         SystemManager.readCustomersFromFile("Custs.csv");
         SystemManager.readParcelsFromFile("Parcels.csv");
+        SystemManager.initialize_Queue();
         ArrayList<String> customers = SystemManager.returnAllCustomers("NAME");
         ArrayList<String> parcels = SystemManager.returnAllParcels("ID");
         ArrayList<String> workers = SystemManager.returnAllWorkers("NAME");
@@ -72,6 +74,7 @@ public class GUI {
         parcelButton.addActionListener(_ -> detailedParcelScreen());
         customerButton.addActionListener(_ -> detailedCustomerScreen());
         saveButton.addActionListener(_-> SystemManager.writeToFile());
+        collectButton.addActionListener(_-> collectOrder());
 
         window.getContentPane().add(panelWest,BorderLayout.WEST);
         window.getContentPane().add(panelNorth, BorderLayout.NORTH);
@@ -251,6 +254,70 @@ public class GUI {
         JScrollPane scroll = new JScrollPane (LogTextArea,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         LogWindow.add(scroll);
+
+
+    }
+
+    public void collectOrder() {
+        JDialog OrderWindow = new JDialog();
+        JPanel LabelPanel = new JPanel();
+        JPanel ButtonPanel = new JPanel();
+        JPanel TextPanel = new JPanel();
+
+        JTextField CustomerTextField = new JTextField(2);
+        JTextField WorkerTextField = new JTextField(20);
+        JTextField ParcelTextField = new JTextField(20);
+
+        JLabel CustomerLabel = new JLabel("Customer ID");
+        JLabel WorkerLabel = new JLabel("Worker ID");
+        JLabel ParcelLabel = new JLabel("Parcel ID");
+        JButton submitButton = new JButton("Submit all IDs");
+
+        LabelPanel.setLayout(new GridLayout(3,0));
+
+        LabelPanel.add(CustomerLabel);
+        LabelPanel.add(WorkerLabel);
+        LabelPanel.add(ParcelLabel);
+
+        TextPanel.add(CustomerTextField);
+        TextPanel.add(WorkerTextField);
+        TextPanel.add(ParcelTextField);
+
+
+
+
+        TextPanel.setLayout(new GridLayout(3,0));
+        ButtonPanel.add(submitButton);
+
+
+        OrderWindow.setBounds(100, 100, 500, 400);
+        OrderWindow.setVisible(true);
+        OrderWindow.setLocationRelativeTo(null);
+        OrderWindow.getContentPane().add(TextPanel, BorderLayout.EAST);
+        OrderWindow.getContentPane().add(LabelPanel, BorderLayout.CENTER);
+        OrderWindow.getContentPane().add(ButtonPanel, BorderLayout.SOUTH);
+
+        submitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String customerID = CustomerTextField.getText();
+                String workerID = WorkerTextField.getText();
+                String parcelID = ParcelTextField.getText();
+
+                Customer current_customer = SystemManager.getCustomer(customerID);
+                Worker current_worker = SystemManager.getWorker(workerID);
+                Parcel current_parcel = SystemManager.getParcel(parcelID);
+
+                boolean result = SystemManager.collectOrder(current_customer,current_parcel,current_worker);
+
+                if(!result) {
+                    System.out.println("Order not collected, check the log for more detail");
+                }
+                else {
+                    System.out.println("Order collected");
+                }
+            }
+        });
+
 
 
     }
