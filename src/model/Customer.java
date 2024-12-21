@@ -1,6 +1,8 @@
 package model;
 
-public class Customer extends Name {
+import java.io.Serializable;
+
+public class Customer extends Name implements Serializable {
 
     private String customerID;
 

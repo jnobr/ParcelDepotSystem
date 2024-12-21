@@ -1,7 +1,10 @@
 package model;
 
-public class Log {
+import java.io.Serializable;
 
+public class Log implements Serializable {
+
+    private static Log instance;
     private final StringBuffer log = new StringBuffer();
     private final StringBuilder builder = new StringBuilder();
 
@@ -20,5 +23,11 @@ public class Log {
     public void initialiseBuffer() {
         log.setLength(0);
 
+    }
+    public static Log getInstance() {
+        if (instance == null) {
+            instance = new Log();
+        }
+        return instance;
     }
 }

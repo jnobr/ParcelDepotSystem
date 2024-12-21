@@ -52,6 +52,9 @@ public class Tester {
 
         System.out.println(SystemManager.checkQueue());
         //System.out.println(SystemManager.returnLog());
+        //System.out.println(SystemManager.returnAllWorkers("ROLE"));
+
+        SystemManager.writeToFile();
 
 
 

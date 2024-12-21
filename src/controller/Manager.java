@@ -1,9 +1,13 @@
 package controller;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 import model.*;
+
+//TODO: Output to log file, comments and GUI
 
 public class Manager {
     private ParcelMap AllParcels;
@@ -12,7 +16,6 @@ public class Manager {
     private QueueOfCustomers Queue;
     private final Log log = new Log();
     private BufferedReader fileReader;
-    private BufferedWriter fileWriter;
 
     public Manager(){
         initialize();
@@ -96,8 +99,64 @@ public class Manager {
         return AllWorkers.addWorker(worker);
     }
 
-    public CustomerMap returnAllCustomers() {
-        return AllCustomers;
+    public ArrayList<String> returnAllCustomers(String type) {
+        ArrayList<String> customers = new ArrayList<>();
+        if(Objects.equals(type, "NAME")) {
+            for (Customer customer : AllCustomers.getMap().values()) {
+                customers.add(customer.getName());
+            }
+        }
+        if(Objects.equals(type, "ID")) {
+            for(Customer customer : AllCustomers.getMap().values()) {
+                customers.add(customer.getCustomerID());
+            }
+        }
+        return customers;
+    }
+
+    public ArrayList<String> returnAllParcels(String type) {
+        ArrayList<String> parcels = new ArrayList<>();
+        if(Objects.equals(type, "ID")) {
+            for (Parcel parcel : AllParcels.getMap().values()) {
+                parcels.add(parcel.getParcelID());
+            }
+        }
+        if(Objects.equals(type, "TIME")) {
+            for (Parcel parcel : AllParcels.getMap().values()) {
+                parcels.add(String.valueOf(parcel.getStorageTime()));
+            }
+        }
+        if(Objects.equals(type, "DIMENSIONS")) {
+            for (Parcel parcel : AllParcels.getMap().values()) {
+                parcels.add(String.valueOf(parcel.getDimensions()));
+            }
+        }
+        if(Objects.equals(type, "WEIGHT")) {
+            for (Parcel parcel : AllParcels.getMap().values()) {
+                parcels.add(String.valueOf(parcel.getWeight()));
+            }
+        }
+        return parcels;
+    }
+
+    public ArrayList<String> returnAllWorkers(String type) {
+        ArrayList<String> workers = new ArrayList<>();
+        if(Objects.equals(type, "NAME")) {
+            for (Worker worker : AllWorkers.getMap().values()) {
+                workers.add(worker.getName());
+            }
+        }
+        if (Objects.equals(type, "ID")) {
+            for(Worker worker : AllWorkers.getMap().values()) {
+                workers.add(worker.getWorkerID());
+            }
+        }
+        if (Objects.equals(type, "ROLE")) {
+            for(Worker worker : AllWorkers.getMap().values()) {
+                workers.add(worker.getRole());
+            }
+        }
+        return workers;
     }
 
     public void initialize() {
@@ -105,6 +164,8 @@ public class Manager {
         AllParcels = new ParcelMap();
         AllWorkers = new WorkerMap();
         Queue = new QueueOfCustomers();
+        initialize_Queue();
+        initialise_Workers();
     }
 
     public void initialize_Queue()
@@ -116,6 +177,19 @@ public class Manager {
             count++;
         }
 
+    }
+
+    public void initialise_Workers()
+    {
+        Worker worker1 = new Worker("J.","M","Loop","001","Counter");
+        Worker worker2 = new Worker("A.","B","Variable","002","Janitor");
+        Worker worker3 = new Worker("K.","C","Field","003","Manager");
+        Worker worker4 = new Worker("L.","D","Field","004","Manager");
+
+        AllWorkers.addWorker(worker1);
+        AllWorkers.addWorker(worker2);
+        AllWorkers.addWorker(worker3);
+        AllWorkers.addWorker(worker4);
     }
 
     public HashMap checkQueue()
@@ -260,7 +334,19 @@ public class Manager {
     }
 
     public void writeToFile() {
-        //Create file and write system info
+        try {
+            FileWriter file = new FileWriter("src/log.txt");
+            BufferedWriter fileWriter = new BufferedWriter(file);
+
+            fileWriter.write(log.getLog());
+            fileWriter.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
 
     }
 }

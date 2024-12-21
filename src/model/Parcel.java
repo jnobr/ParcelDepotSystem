@@ -1,6 +1,8 @@
 package model;
 
-public class Parcel {
+import java.io.Serializable;
+
+public class Parcel implements Serializable {
     private String parcelID;
     private int StorageTime;
     private String dimensions;

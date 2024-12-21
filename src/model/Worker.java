@@ -1,6 +1,8 @@
 package model;
 
-public class Worker extends Name {
+import java.io.Serializable;
+
+public class Worker extends Name implements Serializable {
 
     private String workerID;
     private String role;
