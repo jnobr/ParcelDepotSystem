@@ -103,6 +103,15 @@ public class Manager {
             log.append("Failed to add a new customer to the system \n");
             return false;
         }
+        if(AllCustomers.findCustomer(customer.getCustomerID()) != null){
+            Customer current = AllCustomers.findCustomer(customer.getCustomerID());
+            current.setCustomerID(customer.getCustomerID());
+            current.setFirstname(customer.getFirstname());
+            current.setMiddlename(customer.getMiddlename());
+            current.setLastname(customer.getLastname());
+            log.append("Successfully updated customer " + customer.getCustomerID() + " \n");
+            return true;
+        }
         log.append("Successfully added a new customer (" + customer.getCustomerID() + ") to the system \n");
         return AllCustomers.addCustomer(customer);
     }
@@ -112,6 +121,16 @@ public class Manager {
             log.append("Failed to add a new parcel to the system \n");
             return false;
         }
+        if(AllParcels.findParcel(parcel.getParcelID()) != null){
+            Parcel current = AllParcels.findParcel(parcel.getParcelID());
+            current.setParcelID(parcel.getParcelID());
+            current.setDimensions(parcel.getDimensions());
+            current.setWeight(parcel.getWeight());
+            current.setStorageTime(parcel.getStorageTime());
+            log.append("Successfully updated parcel " + parcel.getParcelID() + " \n");
+            return true;
+
+        }
         log.append("Successfully added a new parcel (" + parcel.getParcelID() + ") to the system \n");
         return AllParcels.addParcel(parcel);
     }
@@ -120,6 +139,16 @@ public class Manager {
         if (worker == null) {
             log.append("Failed to add a new worker to the system \n");
             return false;
+        }
+        if(AllWorkers.findWorker(worker.getWorkerID()) != null){
+            Worker current = AllWorkers.findWorker(worker.getWorkerID());
+            current.setWorkerID(worker.getWorkerID());
+            current.setFirstname(worker.getFirstname());
+            current.setMiddlename(worker.getMiddlename());
+            current.setLastname(worker.getLastname());
+            current.setRole(worker.getRole());
+            log.append("Successfully updated worker " + worker.getWorkerID() + " \n");
+            return true;
         }
         log.append("Successfully added a new worker (" + worker.getWorkerID() + ") to the system \n");
         return AllWorkers.addWorker(worker);
