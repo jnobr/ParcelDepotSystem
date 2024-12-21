@@ -142,6 +142,8 @@ public class GUI {
         ParcelScreen.setVisible(true);
 
         editParcel.addActionListener(_ -> editParcelScreen());
+        addParcel.addActionListener(_->addParcelScreen());
+        removeParcel.addActionListener(_->removeParcelScreen());
     }
 
     public void detailedCustomerScreen() {
@@ -183,6 +185,8 @@ public class GUI {
         CustomerScreen.setVisible(true);
 
         editCustomer.addActionListener(_-> editCustomerScreen());
+        addCustomer.addActionListener(_-> addCustomerScreen());
+        removeCustomer.addActionListener(_->removeCustomerScreen());
 
     }
 
@@ -231,6 +235,8 @@ public class GUI {
         WorkerScreen.setVisible(true);
 
         editWorker.addActionListener(_-> editWorkerScreen());
+        addWorker.addActionListener(_-> addWorkerScreen());
+        removeWorker.addActionListener(_-> removeWorkerScreen());
 
 
     }
@@ -712,6 +718,266 @@ public class GUI {
 
     }
 
+    public void addCustomerScreen() {
+        refreshModelLists();
+
+        JDialog CustomerWindow = new JDialog();
+        JPanel LabelPanel = new JPanel();
+        JPanel ButtonPanel = new JPanel();
+        JPanel TextPanel = new JPanel();
+        CustomerWindow.setBounds(100, 100, 500, 400);
+        CustomerWindow.setVisible(true);
+        CustomerWindow.setLocationRelativeTo(null);
+        LabelPanel.setLayout(new GridLayout(4,0));
+        TextPanel.setLayout(new GridLayout(4,0));
+
+        JLabel IdLabel = new JLabel("ID");
+        JLabel FirstNameLabel = new JLabel("First Name");
+        JLabel MiddleNameLabel = new JLabel("Middle Name");
+        JLabel LastNameLabel = new JLabel("Last Name");
+
+        JTextField IdTextField = new JTextField(20);
+        JTextField FirstNameTextField = new JTextField(20);
+        JTextField MiddleNameTextField = new JTextField(20);
+        JTextField LastNameTextField = new JTextField(20);
+
+        LabelPanel.add(IdLabel);
+        LabelPanel.add(FirstNameLabel);
+        LabelPanel.add(MiddleNameLabel);
+        LabelPanel.add(LastNameLabel);
+
+        TextPanel.add(IdTextField);
+        TextPanel.add(FirstNameTextField);
+        TextPanel.add(MiddleNameTextField);
+        TextPanel.add(LastNameTextField);
+
+        JButton submitButton = new JButton("Add Customer");
+
+        ButtonPanel.add(submitButton);
+
+        CustomerWindow.getContentPane().add(LabelPanel, BorderLayout.WEST);
+        CustomerWindow.getContentPane().add(TextPanel, BorderLayout.CENTER);
+        CustomerWindow.getContentPane().add(ButtonPanel, BorderLayout.EAST);
+
+        submitButton.addActionListener(_->{
+            String id = IdTextField.getText();
+            String firstname = FirstNameTextField.getText();
+            String middlename = MiddleNameTextField.getText();
+            String lastname = LastNameTextField.getText();
+            Customer customer = new Customer(id, firstname, middlename, lastname);
+            boolean result = SystemManager.updateCustomerRecord(customer);
+            if(!result) {
+                System.out.println("Customer not added");
+            }
+        });
+
+    }
+
+    public void addWorkerScreen(){
+        refreshModelLists();
+
+        JDialog WorkersWindow = new JDialog();
+        JPanel LabelPanel = new JPanel();
+        JPanel ButtonPanel = new JPanel();
+        JPanel TextPanel = new JPanel();
+        WorkersWindow.setBounds(100, 100, 500, 400);
+        WorkersWindow.setVisible(true);
+        WorkersWindow.setLocationRelativeTo(null);
+        LabelPanel.setLayout(new GridLayout(5,0));
+        TextPanel.setLayout(new GridLayout(5,0));
+
+        JLabel IdLabel = new JLabel("ID");
+        JLabel FirstNameLabel = new JLabel("First Name");
+        JLabel MiddleNameLabel = new JLabel("Middle Name");
+        JLabel LastNameLabel = new JLabel("Last Name");
+        JLabel RoleLabel = new JLabel("Role");
+
+        JTextField IdTextField = new JTextField(20);
+        JTextField FirstNameTextField = new JTextField(20);
+        JTextField MiddleNameTextField = new JTextField(20);
+        JTextField LastNameTextField = new JTextField(20);
+        JTextField RoleTextField = new JTextField(20);
+
+        LabelPanel.add(IdLabel);
+        LabelPanel.add(FirstNameLabel);
+        LabelPanel.add(MiddleNameLabel);
+        LabelPanel.add(LastNameLabel);
+        LabelPanel.add(RoleLabel);
+
+        TextPanel.add(IdTextField);
+        TextPanel.add(FirstNameTextField);
+        TextPanel.add(MiddleNameTextField);
+        TextPanel.add(LastNameTextField);
+        TextPanel.add(RoleTextField);
+
+        JButton submitButton = new JButton("Add Worker");
+        ButtonPanel.add(submitButton);
+
+        WorkersWindow.getContentPane().add(LabelPanel, BorderLayout.WEST);
+        WorkersWindow.getContentPane().add(TextPanel, BorderLayout.CENTER);
+        WorkersWindow.getContentPane().add(ButtonPanel, BorderLayout.EAST);
+
+        submitButton.addActionListener(_->{
+           String id = IdTextField.getText();
+           String firstname = FirstNameTextField.getText();
+           String middlename = MiddleNameTextField.getText();
+           String lastname = LastNameTextField.getText();
+           String role = RoleTextField.getText();
+           Worker worker = new Worker(id, firstname, middlename, lastname, role);
+           boolean result = SystemManager.updateWorkerRecord(worker);
+           if(!result) {
+               System.out.println("Worker not added");
+           }
+        });
+
+
+    }
+
+    public void addParcelScreen(){
+        refreshModelLists();
+
+        JDialog ParcelWindow = new JDialog();
+        JPanel LabelPanel = new JPanel();
+        JPanel ButtonPanel = new JPanel();
+        JPanel TextPanel = new JPanel();
+
+        ParcelWindow.setBounds(100, 100, 500, 400);
+        ParcelWindow.setVisible(true);
+        ParcelWindow.setLocationRelativeTo(null);
+
+        LabelPanel.setLayout(new GridLayout(4,0));
+        TextPanel.setLayout(new GridLayout(4,0));
+
+        JLabel IdLabel = new JLabel("ID");
+        JLabel TimeLabel = new JLabel("Time");
+        JLabel DimensionLabel = new JLabel("Dimensions");
+        JLabel WeightLabel = new JLabel("Weight");
+
+        JTextField IdTextField = new JTextField(20);
+        JTextField TimeTextField = new JTextField(20);
+        JTextField WeightTextField = new JTextField(20);
+        JTextField DimensionsTextField = new JTextField(20);
+
+        JButton submitButton = new JButton("Add Parcel");
+        ButtonPanel.add(submitButton);
+
+        LabelPanel.add(IdLabel);
+        LabelPanel.add(TimeLabel);
+        LabelPanel.add(DimensionLabel);
+        LabelPanel.add(WeightLabel);
+
+        TextPanel.add(IdTextField);
+        TextPanel.add(TimeTextField);
+        TextPanel.add(DimensionsTextField);
+        TextPanel.add(WeightTextField);
+
+        ParcelWindow.getContentPane().add(LabelPanel, BorderLayout.WEST);
+        ParcelWindow.getContentPane().add(TextPanel, BorderLayout.CENTER);
+        ParcelWindow.getContentPane().add(ButtonPanel, BorderLayout.EAST);
+
+        submitButton.addActionListener(_->{
+            String id = IdTextField.getText();
+            int time = Integer.parseInt(TimeTextField.getText());
+            String dimensions = DimensionsTextField.getText();
+            int weight = Integer.parseInt(WeightTextField.getText());
+
+            Parcel parcel = new Parcel(id, time, dimensions, weight);
+            boolean result = SystemManager.updateParcelRecord(parcel);
+            if(!result) {
+                System.out.println("Parcel not added");
+            }
+
+        });
+    }
+
+    public void removeCustomerScreen(){
+        refreshModelLists();
+
+        JDialog CustomerWindow = new JDialog();
+        JPanel LabelPanel = new JPanel();
+        JPanel ButtonPanel = new JPanel();
+        JPanel TextPanel = new JPanel();
+        CustomerWindow.setBounds(100, 100, 500, 400);
+        CustomerWindow.setVisible(true);
+        CustomerWindow.setLocationRelativeTo(null);
+
+        JLabel IdLabel = new JLabel("ID");
+        JTextField IdTextField = new JTextField(20);
+        JButton removeButton = new JButton("Remove customer");
+
+        ButtonPanel.add(removeButton);
+        LabelPanel.add(IdLabel);
+        TextPanel.add(IdTextField);
+
+        CustomerWindow.getContentPane().add(LabelPanel, BorderLayout.WEST);
+        CustomerWindow.getContentPane().add(TextPanel, BorderLayout.CENTER);
+        CustomerWindow.getContentPane().add(ButtonPanel, BorderLayout.EAST);
+
+        removeButton.addActionListener(_->{
+            String id = IdTextField.getText();
+            SystemManager.removeCustomer(id);
+        });
+    }
+
+    public void removeWorkerScreen(){
+        refreshModelLists();
+
+        JDialog WorkersWindow = new JDialog();
+        JPanel LabelPanel = new JPanel();
+        JPanel ButtonPanel = new JPanel();
+        JPanel TextPanel = new JPanel();
+
+        WorkersWindow.setBounds(100, 100, 500, 400);
+        WorkersWindow.setVisible(true);
+        WorkersWindow.setLocationRelativeTo(null);
+
+        JLabel IdLabel = new JLabel("ID");
+        JTextField IdTextField = new JTextField(20);
+        JButton removeButton = new JButton("Remove worker");
+
+        ButtonPanel.add(removeButton);
+        LabelPanel.add(IdLabel);
+        TextPanel.add(IdTextField);
+
+        WorkersWindow.getContentPane().add(LabelPanel, BorderLayout.WEST);
+        WorkersWindow.getContentPane().add(TextPanel, BorderLayout.CENTER);
+        WorkersWindow.getContentPane().add(ButtonPanel, BorderLayout.EAST);
+
+        removeButton.addActionListener(_->{
+            String id = IdTextField.getText();
+            SystemManager.removeWorker(id);
+        });
+
+    }
+
+    public void removeParcelScreen(){
+        refreshModelLists();
+
+        JDialog ParcelWindow = new JDialog();
+        JPanel LabelPanel = new JPanel();
+        JPanel ButtonPanel = new JPanel();
+        JPanel TextPanel = new JPanel();
+
+        ParcelWindow.setBounds(100, 100, 500, 400);
+        ParcelWindow.setVisible(true);
+        ParcelWindow.setLocationRelativeTo(null);
+
+        JLabel IdLabel = new JLabel("ID");
+        JTextField IdTextField = new JTextField(20);
+        JButton removeButton = new JButton("Remove parcel");
+        ButtonPanel.add(removeButton);
+        LabelPanel.add(IdLabel);
+        TextPanel.add(IdTextField);
+
+        ParcelWindow.getContentPane().add(LabelPanel, BorderLayout.WEST);
+        ParcelWindow.getContentPane().add(TextPanel, BorderLayout.CENTER);
+        ParcelWindow.getContentPane().add(ButtonPanel, BorderLayout.EAST);
+
+        removeButton.addActionListener(_->{
+            String id = IdTextField.getText();
+            SystemManager.removeParcel(id);
+        });
+    }
 
     public static void main(String[] args) throws IOException {
         new GUI();

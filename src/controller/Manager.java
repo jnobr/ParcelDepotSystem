@@ -22,6 +22,18 @@ public class Manager {
         //initialize_Queue();
     }
 
+    public void removeCustomer(String id){
+        AllCustomers.removeCustomer(id);
+    }
+
+    public void removeParcel(String id){
+        AllParcels.removeParcel(id);
+    }
+
+    public void removeWorker(String id){
+        AllWorkers.removeWorker(id);
+    }
+
     public Customer getCustomer(String id){
         //returns an empty customer if no corresponding customer can be found for error handling purposes
         Customer customer = AllCustomers.findCustomer(id);
@@ -229,7 +241,6 @@ public class Manager {
         Integer count = 1;
         for(String id: AllCustomers.getMap().keySet())
         {
-            System.out.println(id);
             Queue.addCustomer(id,count);
             count++;
         }
@@ -333,10 +344,6 @@ public class Manager {
                 + currentWorker.getWorkerID() + "\n");
 
         return true;
-    }
-
-    public void cancelOrder() {
-        //TODO: remove customer from queue and remove parcel from parcel list
     }
 
     public String returnLog() {
