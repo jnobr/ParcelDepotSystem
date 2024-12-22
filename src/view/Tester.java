@@ -7,19 +7,22 @@ import java.io.IOException;
 
 public class Tester {
     public static void main(String[] args) throws IOException {
+        //Testing class instantiation
         Manager SystemManager = new Manager();
         Customer customer =
-                new Customer("123","J","","Q");
+                new Customer("C123","J","","Q");
 
         Parcel parcel =
-                new Parcel("ABC",1,"2x2x2",60);
+                new Parcel("C123",1,"2x2x2",60);
 
         Worker worker =
-                new Worker("M","","Q","LKJ","Manager");
+                new Worker("M","","Q","008","Manager");
 
+        //checking calculateFee method
+        var res = SystemManager.calculateFee(parcel,worker);
+        System.out.println(res);
 
-
-
+        //Testing toString() methods
         System.out.println(customer.toString());
         System.out.println(parcel.toString());
         System.out.println(worker.toString());
@@ -27,7 +30,8 @@ public class Tester {
         SystemManager.initialize();
 
 
-
+        //Checking validate methods before and after objects exist in collections
+        //Also checking the response with null values
         SystemManager.validateCustomer(customer);
         SystemManager.validateParcel(parcel);
         SystemManager.validateWorker(worker);
@@ -46,20 +50,28 @@ public class Tester {
         SystemManager.validateParcel(null);
         SystemManager.validateWorker(null);
 
+        //Checking file reading methods
         SystemManager.readCustomersFromFile("Custs.csv");
         SystemManager.readParcelsFromFile("Parcels.csv");
-        //System.out.println(SystemManager.returnAllCustomers().getMap());
+        //Checking queue initialisation
         SystemManager.initialize_Queue();
 
+        //Checking to see if Queue works
         Customer real_customer = SystemManager.getCustomer("X009");
         Worker real_worker = SystemManager.getWorker("003");
         Parcel real_parcel = SystemManager.getParcel("X009");
         System.out.println(SystemManager.checkQueue());
-        //System.out.println(SystemManager.returnLog());
-        //System.out.println(SystemManager.returnAllWorkers("ROLE"));
 
+        //Checking log updates and returns data
+        System.out.println(SystemManager.returnLog());
+
+        //Checking collections return data
+        System.out.println(SystemManager.returnAllWorkers("ROLE"));
+
+        //Checking collect order function works as expected
         SystemManager.collectOrder(real_customer,real_parcel,real_worker);
 
+        //Checking that log will output to log.txt
         SystemManager.writeToFile();
 
 

@@ -9,32 +9,35 @@ import java.awt.BorderLayout;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
 import javax.swing.*;
 
 public class GUI {
-    //TODO: Add functionality for main window to refresh every few seconds
-    private JList CustomerList,ParcelList,WorkerList;
+    private JList CustomerList,ParcelList,WorkerList,Queue;
     private final Manager SystemManager = new Manager();
 
     public GUI() throws IOException {
         SystemManager.readCustomersFromFile("Custs.csv");
         SystemManager.readParcelsFromFile("Parcels.csv");
         SystemManager.initialize_Queue();
+
+
         refreshModelLists();
 
         JFrame window = new JFrame("Example GUI");
-        window.setBounds(100, 100, 500, 400);
+        window.setBounds(100, 100, 500, 700);
         JPanel panelNorth = new JPanel();
         JPanel panelSouth = new JPanel();
         JPanel panelCentre = new JPanel();
 
         panelNorth.setLayout(new GridLayout(1,3));
-        panelCentre.setLayout(new GridLayout(1,3));
+        panelCentre.setLayout(new GridLayout(1,4));
         panelSouth.setLayout(new GridLayout(2,3));
 
         JLabel CustomerLabel = new JLabel("Customer");
         JLabel ParcelLabel = new JLabel("Parcel");
         JLabel WorkerLabel = new JLabel("Worker");
+        JLabel QueueLabel = new JLabel("Queue");
 
         JButton logButton = new JButton("Log");
         JButton saveButton = new JButton("Save");
@@ -42,9 +45,12 @@ public class GUI {
         panelNorth.add(CustomerLabel);
         panelNorth.add(ParcelLabel);
         panelNorth.add(WorkerLabel);
+        panelNorth.add(QueueLabel);
         panelCentre.add(CustomerList);
         panelCentre.add(ParcelList);
         panelCentre.add(WorkerList);
+        panelCentre.add(Queue);
+
 
 
 
@@ -75,14 +81,35 @@ public class GUI {
         window.getContentPane().add(panelSouth, BorderLayout.SOUTH);
         window.getContentPane().add(panelCentre, BorderLayout.CENTER);
         window.setVisible(true);
+
+
+        Timer timer = new Timer(100, _ -> {
+            refreshModelLists();
+            panelCentre.removeAll();
+            panelCentre.repaint();
+            panelCentre.revalidate();
+            panelCentre.add(CustomerList);
+            panelCentre.add(ParcelList);
+            panelCentre.add(WorkerList);
+            panelCentre.add(Queue);
+            System.out.println("a");
+        });
+        timer.start();
+
+
     }
     public void refreshModelLists() {
         ArrayList<String> customers = SystemManager.returnAllCustomers("NAME");
         ArrayList<String> parcels = SystemManager.returnAllParcels("ID");
         ArrayList<String> workers = SystemManager.returnAllWorkers("NAME");
+        Collection queueOfCustomers = SystemManager.checkQueue().values();
         CustomerList = new JList(customers.toArray());
         ParcelList = new JList(parcels.toArray());
         WorkerList = new JList(workers.toArray());
+        Queue = new JList(queueOfCustomers.toArray());
+
+
+
     }
 
 
@@ -101,7 +128,7 @@ public class GUI {
         ButtonPanel.setLayout(new GridLayout(1, 3));
         ParcelPanel.setLayout(new GridLayout(1,5));
         LabelPanel.setLayout(new GridLayout(1,5));
-        ParcelScreen.setBounds(100,100,500,400);
+        ParcelScreen.setBounds(100,100,500,700);
 
         ArrayList<String> ids = SystemManager.returnAllParcels("ID");
         ArrayList<String> dimensions = SystemManager.returnAllParcels("DIMENSIONS");
@@ -160,7 +187,7 @@ public class GUI {
         ButtonPanel.setLayout(new GridLayout(1, 3));
         CustomerPanel.setLayout(new GridLayout(1,2));
         LabelPanel.setLayout(new GridLayout(1,2));
-        CustomerScreen.setBounds(100,100,500,400);
+        CustomerScreen.setBounds(100,100,500,700);
 
         ArrayList<String> ids = SystemManager.returnAllCustomers("ID");
         JList idList = new JList(ids.toArray());
@@ -204,7 +231,7 @@ public class GUI {
         WorkersPanel.setLayout(new GridLayout(1,3));
         LabelPanel.setLayout(new GridLayout(1,3));
         ButtonPanel.setLayout(new GridLayout(1,3));
-        WorkerScreen.setBounds(100,100,500,400);
+        WorkerScreen.setBounds(100,100,500,700);
 
         ArrayList<String> ids = SystemManager.returnAllWorkers("ID");
         ArrayList<String> roles = SystemManager.returnAllWorkers("ROLE");
@@ -249,7 +276,7 @@ public class GUI {
         JTextArea LogTextArea = new JTextArea();
         String log = SystemManager.returnLog();
         LogTextArea.setText(log);
-        LogWindow.setBounds(100, 100, 500, 400);
+        LogWindow.setBounds(100, 100, 500, 700);
         LogWindow.setVisible(true);
         LogWindow.setLocationRelativeTo(null);
         LogPanel.add(LogTextArea);
@@ -295,7 +322,7 @@ public class GUI {
         ButtonPanel.add(submitButton);
 
 
-        OrderWindow.setBounds(100, 100, 500, 400);
+        OrderWindow.setBounds(100, 100, 500, 700);
         OrderWindow.setVisible(true);
         OrderWindow.setLocationRelativeTo(null);
         OrderWindow.getContentPane().add(TextPanel, BorderLayout.EAST);
@@ -897,7 +924,7 @@ public class GUI {
         JPanel LabelPanel = new JPanel();
         JPanel ButtonPanel = new JPanel();
         JPanel TextPanel = new JPanel();
-        CustomerWindow.setBounds(100, 100, 500, 400);
+        CustomerWindow.setBounds(100, 100, 500, 100);
         CustomerWindow.setVisible(true);
         CustomerWindow.setLocationRelativeTo(null);
 
@@ -927,7 +954,7 @@ public class GUI {
         JPanel ButtonPanel = new JPanel();
         JPanel TextPanel = new JPanel();
 
-        WorkersWindow.setBounds(100, 100, 500, 400);
+        WorkersWindow.setBounds(100, 100, 500, 100);
         WorkersWindow.setVisible(true);
         WorkersWindow.setLocationRelativeTo(null);
 
@@ -958,7 +985,7 @@ public class GUI {
         JPanel ButtonPanel = new JPanel();
         JPanel TextPanel = new JPanel();
 
-        ParcelWindow.setBounds(100, 100, 500, 400);
+        ParcelWindow.setBounds(100, 100, 500, 100);
         ParcelWindow.setVisible(true);
         ParcelWindow.setLocationRelativeTo(null);
 

@@ -6,7 +6,6 @@ public class Log implements Serializable {
 
     private static Log instance;
     private final StringBuffer log = new StringBuffer();
-    private final StringBuilder builder = new StringBuilder();
 
     public Log() {
         initialiseBuffer();

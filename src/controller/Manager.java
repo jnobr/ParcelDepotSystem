@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import model.*;
 
-//TODO: Output to log file, comments and GUI
+//TODO: comments and GUI, double check singleton
 
 public class Manager {
     private ParcelMap AllParcels;
@@ -19,19 +19,36 @@ public class Manager {
 
     public Manager(){
         initialize();
-        //initialize_Queue();
     }
 
     public void removeCustomer(String id){
-        AllCustomers.removeCustomer(id);
+        boolean result = AllCustomers.removeCustomer(id);
+        if(result){
+            log.append("Customer " + id + " removed\n");
+        }
+        else{
+            log.append("Customer " + id + " not found\n");
+        }
     }
 
     public void removeParcel(String id){
-        AllParcels.removeParcel(id);
+        boolean result = AllParcels.removeParcel(id);
+        if(result){
+            log.append("Parcel " + id + " removed\n");
+        }
+        else{
+            log.append("Parcel " + id + " not found\n");
+        }
     }
 
     public void removeWorker(String id){
-        AllWorkers.removeWorker(id);
+        boolean result = AllWorkers.removeWorker(id);
+        if(result){
+            log.append("Worker " + id + " removed\n");
+        }
+        else{
+            log.append("Worker " + id + " not found\n");
+        }
     }
 
     public Customer getCustomer(String id){
@@ -231,11 +248,11 @@ public class Manager {
         AllParcels = new ParcelMap();
         AllWorkers = new WorkerMap();
         Queue = new QueueOfCustomers();
-        initialize_Queue();
         initialise_Workers();
         log.append("System fully initialised\n");
     }
 
+    //Initialises a queue of Customer IDs and their position in queue
     public void initialize_Queue()
     {
         Integer count = 1;
@@ -249,6 +266,7 @@ public class Manager {
 
     public void initialise_Workers()
     {
+        //Initialising a list of 4 workers as no sample data was provided
         Worker worker1 = new Worker("J.","M","Loop","001","Counter");
         Worker worker2 = new Worker("A.","B","Variable","002","Janitor");
         Worker worker3 = new Worker("K.","C","Field","003","Manager");
@@ -281,7 +299,7 @@ public class Manager {
         cost = dimensionsTotal * parcel.getStorageTime() * parcel.getWeight();
         double discount = checkForDiscount(parcel,worker);
         if(discount != 0) {
-            cost = cost * discount;
+            cost = cost * (1 - discount);
         }
 
         return cost;
@@ -289,8 +307,9 @@ public class Manager {
 
     }
 
+    //Checks to see if all necessary conditions for a discount to be applied are met
     public double checkForDiscount(Parcel parcel, Worker worker) {
-        if (validateWorker(worker)) {
+        if (validateWorker(worker) && validateParcel(parcel)) {
         boolean condition1,condition2,condition3;
         double discount = 0;
         String substring = parcel.getParcelID().substring(1);
@@ -308,12 +327,14 @@ public class Manager {
                 + parcel.getParcelID() + " is valid for a discount\n");
         log.append("Parcel " + parcel.getParcelID() + " is valid for a discount of " + discount + "%\n" );
 
-        return discount; }
+        return discount;}
         log.append("Worker " + worker.getWorkerID() + " does not have authorisation to carry out this task\n");
-        return -0;
+        return 0;
 
     }
 
+    //Function checks to see if parameters are valid, then checks to see if provided customer is first in queue
+    //Then calculates the fee and removes customer from queue
     public boolean collectOrder(Customer currentCustomer, Parcel currentParcel, Worker currentWorker) {
         boolean validCustomer = validateCustomer(currentCustomer);
         boolean validParcel = validateParcel(currentParcel);
@@ -339,7 +360,7 @@ public class Manager {
         double price = calculateFee(currentParcel,currentWorker);
         AllParcels.removeParcel(currentParcel.getParcelID());
         Queue.removeCustomer();
-        log.append("Parcel " + currentParcel.getParcelID() + "has been collected and cost of "
+        log.append("Parcel " + currentParcel.getParcelID() + " has been collected and cost of "
                 + price + " has been paid. Transaction completed by worker "
                 + currentWorker.getWorkerID() + "\n");
 

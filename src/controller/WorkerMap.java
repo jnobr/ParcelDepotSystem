@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import model.Worker;
 
@@ -14,12 +13,7 @@ public class WorkerMap {
         return map;
     }
 
-    public void initialiseMap(ArrayList<Worker> Workers) {
-        //TODO: Create 3 dummy employees and add them to the list here
-        for(Worker Worker : Workers) {
-            this.map.put(Worker.getWorkerID(),Worker);
-        }
-    }
+
 
     public Worker findWorker(String id) {
         Worker Worker = map.get(id);
