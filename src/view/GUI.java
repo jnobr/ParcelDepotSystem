@@ -5,7 +5,6 @@ import model.Customer;
 import model.Parcel;
 import model.Worker;
 
-import java.awt.BorderLayout;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -21,10 +20,10 @@ public class GUI {
         SystemManager.readParcelsFromFile("Parcels.csv");
         SystemManager.initialize_Queue();
 
-
+        //Filling the global lists with up-to-date data
         refreshModelLists();
 
-        JFrame window = new JFrame("Example GUI");
+        JFrame window = new JFrame("Parcel Depot");
         window.setBounds(100, 100, 500, 700);
         JPanel panelNorth = new JPanel();
         JPanel panelSouth = new JPanel();
@@ -51,15 +50,11 @@ public class GUI {
         panelCentre.add(WorkerList);
         panelCentre.add(Queue);
 
-
-
-
         JButton parcelButton = new JButton("View Parcels in detail");
         JButton workerButton = new JButton("View Workers in detail");
         JButton customerButton = new JButton("View Customers in detail");
         JButton collectButton = new JButton("Collect Order");
 
-// Define the panel to hold the buttons
         JPanel panelWest = new JPanel();
         panelWest.setLayout(new GridLayout(4, 1));
         panelSouth.add(parcelButton);
@@ -82,7 +77,8 @@ public class GUI {
         window.getContentPane().add(panelCentre, BorderLayout.CENTER);
         window.setVisible(true);
 
-
+        //Using a timer object to refresh the main screen every
+        //second to reflect changes to data
         Timer timer = new Timer(100, _ -> {
             refreshModelLists();
             panelCentre.removeAll();
@@ -92,12 +88,12 @@ public class GUI {
             panelCentre.add(ParcelList);
             panelCentre.add(WorkerList);
             panelCentre.add(Queue);
-            System.out.println("a");
         });
         timer.start();
 
 
     }
+
     public void refreshModelLists() {
         ArrayList<String> customers = SystemManager.returnAllCustomers("NAME");
         ArrayList<String> parcels = SystemManager.returnAllParcels("ID");
@@ -107,12 +103,7 @@ public class GUI {
         ParcelList = new JList(parcels.toArray());
         WorkerList = new JList(workers.toArray());
         Queue = new JList(queueOfCustomers.toArray());
-
-
-
     }
-
-
 
     public void detailedParcelScreen() {
         refreshModelLists();
@@ -264,8 +255,6 @@ public class GUI {
         editWorker.addActionListener(_-> editWorkerScreen());
         addWorker.addActionListener(_-> addWorkerScreen());
         removeWorker.addActionListener(_-> removeWorkerScreen());
-
-
     }
 
     public void showLog() {
@@ -284,8 +273,6 @@ public class GUI {
         JScrollPane scroll = new JScrollPane (LogTextArea,
                 JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         LogWindow.add(scroll);
-
-
     }
 
     public void collectOrder() {
@@ -296,7 +283,7 @@ public class GUI {
         JPanel ButtonPanel = new JPanel();
         JPanel TextPanel = new JPanel();
 
-        JTextField CustomerTextField = new JTextField(2);
+        JTextField CustomerTextField = new JTextField(20);
         JTextField WorkerTextField = new JTextField(20);
         JTextField ParcelTextField = new JTextField(20);
 
@@ -305,7 +292,7 @@ public class GUI {
         JLabel ParcelLabel = new JLabel("Parcel ID");
         JButton submitButton = new JButton("Submit all IDs");
 
-        LabelPanel.setLayout(new GridLayout(3,0));
+        LabelPanel.setLayout(new GridLayout(3,1));
 
         LabelPanel.add(CustomerLabel);
         LabelPanel.add(WorkerLabel);
@@ -315,14 +302,10 @@ public class GUI {
         TextPanel.add(WorkerTextField);
         TextPanel.add(ParcelTextField);
 
-
-
-
         TextPanel.setLayout(new GridLayout(3,0));
         ButtonPanel.add(submitButton);
 
-
-        OrderWindow.setBounds(100, 100, 500, 700);
+        OrderWindow.setBounds(100, 100, 500, 400);
         OrderWindow.setVisible(true);
         OrderWindow.setLocationRelativeTo(null);
         OrderWindow.getContentPane().add(TextPanel, BorderLayout.EAST);
@@ -347,8 +330,6 @@ public class GUI {
                 System.out.println("Order collected");
             }
         });
-
-
 
     }
 
@@ -736,12 +717,9 @@ public class GUI {
                     System.out.println("Customer not added");
                 }
 
-
             }
 
         });
-
-
 
     }
 

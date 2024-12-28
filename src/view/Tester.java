@@ -23,9 +23,9 @@ public class Tester {
         System.out.println(res);
 
         //Testing toString() methods
-        System.out.println(customer.toString());
-        System.out.println(parcel.toString());
-        System.out.println(worker.toString());
+        System.out.println(customer);
+        System.out.println(parcel);
+        System.out.println(worker);
 
         SystemManager.initialize();
 

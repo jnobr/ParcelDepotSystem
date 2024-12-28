@@ -7,14 +7,14 @@ import java.util.Objects;
 
 import model.*;
 
-//TODO: comments and GUI, double check singleton
+
 
 public class Manager {
     private ParcelMap AllParcels;
     private CustomerMap AllCustomers;
     private WorkerMap AllWorkers;
     private QueueOfCustomers Queue;
-    private final Log log = new Log();
+    private final Log log = Log.getInstance();
     private BufferedReader fileReader;
 
     public Manager(){
