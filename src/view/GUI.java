@@ -24,7 +24,7 @@ public class GUI {
         refreshModelLists();
 
         JFrame window = new JFrame("Parcel Depot");
-        window.setBounds(100, 100, 500, 700);
+        window.setBounds(100, 100, 600, 700);
         JPanel panelNorth = new JPanel();
         JPanel panelSouth = new JPanel();
         JPanel panelCentre = new JPanel();
@@ -38,8 +38,8 @@ public class GUI {
         JLabel WorkerLabel = new JLabel("Worker");
         JLabel QueueLabel = new JLabel("Queue");
 
-        JButton logButton = new JButton("Log");
-        JButton saveButton = new JButton("Save");
+        JButton logButton = new JButton("Open Log");
+        JButton saveButton = new JButton("Save Log");
 
         panelNorth.add(CustomerLabel);
         panelNorth.add(ParcelLabel);
@@ -79,7 +79,7 @@ public class GUI {
 
         //Using a timer object to refresh the main screen every
         //second to reflect changes to data
-        Timer timer = new Timer(100, _ -> {
+        Timer mainTimer = new Timer(100, _ -> {
             refreshModelLists();
             panelCentre.removeAll();
             panelCentre.repaint();
@@ -89,7 +89,7 @@ public class GUI {
             panelCentre.add(WorkerList);
             panelCentre.add(Queue);
         });
-        timer.start();
+        mainTimer.start();
 
 
     }
@@ -159,9 +159,11 @@ public class GUI {
 
         ParcelScreen.setVisible(true);
 
-        editParcel.addActionListener(_ -> editParcelScreen());
-        addParcel.addActionListener(_->addParcelScreen());
-        removeParcel.addActionListener(_->removeParcelScreen());
+        editParcel.addActionListener(_ -> editParcelScreen(ParcelScreen));
+        addParcel.addActionListener(_->addParcelScreen(ParcelScreen));
+        removeParcel.addActionListener(_->removeParcelScreen(ParcelScreen));
+
+
     }
 
     public void detailedCustomerScreen() {
@@ -202,9 +204,9 @@ public class GUI {
 
         CustomerScreen.setVisible(true);
 
-        editCustomer.addActionListener(_-> editCustomerScreen());
-        addCustomer.addActionListener(_-> addCustomerScreen());
-        removeCustomer.addActionListener(_->removeCustomerScreen());
+        editCustomer.addActionListener(_-> editCustomerScreen(CustomerScreen));
+        addCustomer.addActionListener(_-> addCustomerScreen(CustomerScreen));
+        removeCustomer.addActionListener(_->removeCustomerScreen(CustomerScreen));
 
     }
 
@@ -252,9 +254,9 @@ public class GUI {
 
         WorkerScreen.setVisible(true);
 
-        editWorker.addActionListener(_-> editWorkerScreen());
-        addWorker.addActionListener(_-> addWorkerScreen());
-        removeWorker.addActionListener(_-> removeWorkerScreen());
+        editWorker.addActionListener(_-> editWorkerScreen(WorkerScreen));
+        addWorker.addActionListener(_-> addWorkerScreen(WorkerScreen));
+        removeWorker.addActionListener(_-> removeWorkerScreen(WorkerScreen));
     }
 
     public void showLog() {
@@ -333,7 +335,7 @@ public class GUI {
 
     }
 
-    public void editParcelScreen(){
+    public void editParcelScreen(JDialog parent){
         refreshModelLists();
 
         JDialog ParcelScreen = new JDialog();
@@ -399,6 +401,8 @@ public class GUI {
                    System.out.println("Parcel not added");
                }
            }
+           parent.dispose();
+           ParcelScreen.dispose();
         });
 
         TimeButton.addActionListener(_ -> {
@@ -416,6 +420,8 @@ public class GUI {
                    System.out.println("Parcel not updated");
                }
            }
+            parent.dispose();
+            ParcelScreen.dispose();
         });
 
         WeightButton.addActionListener(_ -> {
@@ -433,6 +439,8 @@ public class GUI {
                     System.out.println("Parcel not updated");
                 }
             }
+            parent.dispose();
+            ParcelScreen.dispose();
         });
 
         DimensionButton.addActionListener(_ -> {
@@ -450,11 +458,13 @@ public class GUI {
                     System.out.println("Parcel not updated");
                 }
             }
+            parent.dispose();
+            ParcelScreen.dispose();
         });
 
     }
 
-    public void editWorkerScreen(){
+    public void editWorkerScreen(JDialog parent){
         refreshModelLists();
 
         JDialog WorkersWindow = new JDialog();
@@ -470,8 +480,7 @@ public class GUI {
         ButtonPanel.setLayout(new GridLayout(5,0));
         TextPanel.setLayout(new GridLayout(5,0));
 
-        JLabel InfoLabel = new JLabel("Worker ID must be filled in to update other fields\n" +
-                "Updating Worker ID will create a new object");
+        JLabel InfoLabel = new JLabel("Worker ID must be filled in to update other fields");
         JLabel FirstNameLabel = new JLabel("First Name");
         JLabel MiddleNameLabel = new JLabel("Middle Name");
         JLabel LastNameLabel = new JLabel("Last Name");
@@ -528,6 +537,8 @@ public class GUI {
                    System.out.println("Worker not updated");
                }
            }
+           parent.dispose();
+           WorkersWindow.dispose();
         });
 
         MiddleNameButton.addActionListener(_ -> {
@@ -545,6 +556,8 @@ public class GUI {
                    System.out.println("Worker not updated");
                }
            }
+            parent.dispose();
+            WorkersWindow.dispose();
         });
 
         LastNameButton.addActionListener(_ -> {
@@ -562,6 +575,8 @@ public class GUI {
                     System.out.println("Worker not updated");
                 }
             }
+            parent.dispose();
+            WorkersWindow.dispose();
         });
 
         IDButton.addActionListener(_ -> {
@@ -578,6 +593,8 @@ public class GUI {
                     System.out.println("Worker not added");
                 }
             }
+            parent.dispose();
+            WorkersWindow.dispose();
         });
 
         RoleButton.addActionListener(_ -> {
@@ -595,11 +612,13 @@ public class GUI {
                    System.out.println("Worker not updated");
                }
            }
+            parent.dispose();
+            WorkersWindow.dispose();
         });
 
     }
 
-    public void editCustomerScreen(){
+    public void editCustomerScreen(JDialog parent){
         refreshModelLists();
 
         JDialog CustomerWindow = new JDialog();
@@ -615,8 +634,7 @@ public class GUI {
         ButtonPanel.setLayout(new GridLayout(4,0));
         TextPanel.setLayout(new GridLayout(4,0));
 
-        JLabel InfoLabel = new JLabel("Customer ID field must be filled in to update any other fields\n"
-        + "Updating an id will result in a new customer being added");
+        JLabel InfoLabel = new JLabel("Customer ID field must be filled in to update any other fields");
         JLabel FirstNameLabel = new JLabel("First Name");
         JLabel MiddleNameLabel = new JLabel("Middle Name");
         JLabel LastNameLabel = new JLabel("Last Name");
@@ -667,6 +685,8 @@ public class GUI {
                     System.out.println("Customer not updated");
                 }
             }
+            parent.dispose();
+            CustomerWindow.dispose();
         });
 
         MiddleNameButton.addActionListener(_ -> {
@@ -684,6 +704,8 @@ public class GUI {
                     System.out.println("Customer not updated");
                 }
             }
+            parent.dispose();
+            CustomerWindow.dispose();
         });
 
         LastNameButton.addActionListener(_ -> {
@@ -701,6 +723,8 @@ public class GUI {
                     System.out.println("Customer not updated");
                 }
             }
+            parent.dispose();
+            CustomerWindow.dispose();
         });
 
         IDButton.addActionListener(_ -> {
@@ -718,12 +742,13 @@ public class GUI {
                 }
 
             }
-
+            parent.dispose();
+            CustomerWindow.dispose();
         });
 
     }
 
-    public void addCustomerScreen() {
+    public void addCustomerScreen(JDialog parent) {
         refreshModelLists();
 
         JDialog CustomerWindow = new JDialog();
@@ -774,11 +799,13 @@ public class GUI {
             if(!result) {
                 System.out.println("Customer not added");
             }
+            parent.dispose();
+            CustomerWindow.dispose();
         });
 
     }
 
-    public void addWorkerScreen(){
+    public void addWorkerScreen(JDialog parent) {
         refreshModelLists();
 
         JDialog WorkersWindow = new JDialog();
@@ -815,14 +842,14 @@ public class GUI {
         TextPanel.add(LastNameTextField);
         TextPanel.add(RoleTextField);
 
-        JButton submitButton = new JButton("Add Worker");
-        ButtonPanel.add(submitButton);
+        JButton addWorkerButton = new JButton("Add Worker");
+        ButtonPanel.add(addWorkerButton);
 
         WorkersWindow.getContentPane().add(LabelPanel, BorderLayout.WEST);
         WorkersWindow.getContentPane().add(TextPanel, BorderLayout.CENTER);
         WorkersWindow.getContentPane().add(ButtonPanel, BorderLayout.EAST);
 
-        submitButton.addActionListener(_->{
+        addWorkerButton.addActionListener(_->{
            String id = IdTextField.getText();
            String firstname = FirstNameTextField.getText();
            String middlename = MiddleNameTextField.getText();
@@ -833,12 +860,14 @@ public class GUI {
            if(!result) {
                System.out.println("Worker not added");
            }
+           parent.dispose();
+           WorkersWindow.dispose();
         });
 
 
     }
 
-    public void addParcelScreen(){
+    public void addParcelScreen(JDialog parent){
         refreshModelLists();
 
         JDialog ParcelWindow = new JDialog();
@@ -853,6 +882,8 @@ public class GUI {
         LabelPanel.setLayout(new GridLayout(4,0));
         TextPanel.setLayout(new GridLayout(4,0));
 
+        JLabel title = new JLabel("Weight and time must be numbers, dimensions " +
+                "should be written as 0x0x0");
         JLabel IdLabel = new JLabel("ID");
         JLabel TimeLabel = new JLabel("Time");
         JLabel DimensionLabel = new JLabel("Dimensions");
@@ -863,8 +894,8 @@ public class GUI {
         JTextField WeightTextField = new JTextField(20);
         JTextField DimensionsTextField = new JTextField(20);
 
-        JButton submitButton = new JButton("Add Parcel");
-        ButtonPanel.add(submitButton);
+        JButton addParcelButton = new JButton("Add Parcel");
+        ButtonPanel.add(addParcelButton);
 
         LabelPanel.add(IdLabel);
         LabelPanel.add(TimeLabel);
@@ -876,11 +907,12 @@ public class GUI {
         TextPanel.add(DimensionsTextField);
         TextPanel.add(WeightTextField);
 
+        ParcelWindow.getContentPane().add(title, BorderLayout.NORTH);
         ParcelWindow.getContentPane().add(LabelPanel, BorderLayout.WEST);
         ParcelWindow.getContentPane().add(TextPanel, BorderLayout.CENTER);
         ParcelWindow.getContentPane().add(ButtonPanel, BorderLayout.EAST);
 
-        submitButton.addActionListener(_->{
+        addParcelButton.addActionListener(_->{
             String id = IdTextField.getText();
             int time = Integer.parseInt(TimeTextField.getText());
             String dimensions = DimensionsTextField.getText();
@@ -891,11 +923,12 @@ public class GUI {
             if(!result) {
                 System.out.println("Parcel not added");
             }
-
+            parent.dispose();
+            ParcelWindow.dispose();
         });
     }
 
-    public void removeCustomerScreen(){
+    public void removeCustomerScreen(JDialog parent){
         refreshModelLists();
 
         JDialog CustomerWindow = new JDialog();
@@ -921,10 +954,12 @@ public class GUI {
         removeButton.addActionListener(_->{
             String id = IdTextField.getText();
             SystemManager.removeCustomer(id);
+            parent.dispose();
+            CustomerWindow.dispose();
         });
     }
 
-    public void removeWorkerScreen(){
+    public void removeWorkerScreen(JDialog parent){
         refreshModelLists();
 
         JDialog WorkersWindow = new JDialog();
@@ -951,11 +986,13 @@ public class GUI {
         removeButton.addActionListener(_->{
             String id = IdTextField.getText();
             SystemManager.removeWorker(id);
+            parent.dispose();
+            WorkersWindow.dispose();
         });
 
     }
 
-    public void removeParcelScreen(){
+    public void removeParcelScreen(JDialog parent){
         refreshModelLists();
 
         JDialog ParcelWindow = new JDialog();
@@ -981,6 +1018,8 @@ public class GUI {
         removeButton.addActionListener(_->{
             String id = IdTextField.getText();
             SystemManager.removeParcel(id);
+            parent.dispose();
+            ParcelWindow.dispose();
         });
     }
 

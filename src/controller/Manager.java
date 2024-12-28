@@ -338,7 +338,8 @@ public class Manager {
     public boolean collectOrder(Customer currentCustomer, Parcel currentParcel, Worker currentWorker) {
         boolean validCustomer = validateCustomer(currentCustomer);
         boolean validParcel = validateParcel(currentParcel);
-        boolean validWorker = validateWorker(currentWorker);
+        boolean validWorker = validateWorker(currentWorker) &&
+                Objects.equals(currentWorker.getRole(), "Manager");
         if(!validCustomer || !validParcel) {
             log.append("Order could not be collected as either the customer or parcel are invalid\n");
             return false;
